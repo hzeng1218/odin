@@ -1,3 +1,3 @@
 # odin
 
-here's all my odin projects
+Here's all my odin projects.
