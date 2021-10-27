@@ -1,31 +1,66 @@
+const OPTIONS = ['rock', 'paper', 'scissors'];
+        
 function computerPlay(){
-	const options = ['rock', 'paper', 'scissors'];
-	return options[Math.floor(Math.random()*options.length)];
+	const randomIndex = Math.floor(Math.random()*OPTIONS.length)
+	return OPTIONS[randomIndex];
 }
- 
-function playRound(playerSelection, computerSelection){
-	if (playerSelection === computerSelection){
+
+function playRound(playerSelection, computerSelection) {
+	if (playerSelection === computerSelection) {
 		console.log(`You and the computer played ${playerSelection}. It's a tie`);
-	}
-	else if ((playerSelection === 'rock' && computerSelection === 'scissors')
-			||(playerSelection === 'scissors' && computerSelection === 'paper')
-			 ||(playerSelection === 'paper' && computerSelection === 'rock')){
+		return 'tie';
+	} else if (
+		(playerSelection === 'rock' && computerSelection === 'scissors') ||
+		(playerSelection === 'scissors' && computerSelection === 'paper') ||
+		(playerSelection === 'paper' && computerSelection === 'rock')
+	) {
 		console.log(`Computer played ${computerSelection}. You win!`);
-			 }
-	else
+		return 'user';
+	} else {
 		console.log(`Computer played ${computerSelection}. You lose.`);
-}	
- 
- 
- 
-function game(){
-	for (let i = 0; i < 5; i++){
-		do {
-			playerSelection = prompt('rock, paper or scissors','')
-}
-		while (playerSelection.toLowerCase() !== 'rock' && playerSelection.toLowerCase() !== 'paper' && playerSelection.toLowerCase() !== 'scissors');
-		playRound(playerSelection, computerPlay())
+		return 'computer';
 	}
- 
 }
+
+const buttons = document.querySelectorAll('button');
+
+const buttonHandler = (button) => {
+	// This was the first attempt
+	// It was good but could be improved via x y z
+	//
+	// const firstOnClickFunction = () => { 
+	//     const userScoreElement = document.querySelector('#user-score'); 
+	//     const computerScoreElement = document.querySelector('#computer-score');
+
+	//     const userScore = parseInt(userScoreElement.textContent);
+	//     const computerScore = parseInt(computerScoreElement.textContent);
+
+	//     const result = playRound(button.id, computerPlay())
+
+	//     if (result === 'user') {
+	//         userScoreElement.textContent = userScore + 1;
+	//     } else if (result === 'computer') {
+	//         computerScoreElement.textContent = computerScore + 1;
+	//     }
+	// };
+
+	// This one runs a lot less code overall
+	const onClickFunction = () => { 
+		const result = playRound(button.id, computerPlay())
+		if (result === 'tie') { 
+			return 
+		} else if (result === 'user') {
+			const userScoreElement = document.querySelector('#user-score'); 
+			const userScore = parseInt(userScoreElement.textContent);
+			userScoreElement.textContent = userScore + 1;
+		} else if (result === 'computer') {
+			const computerScoreElement = document.querySelector('#computer-score');
+			const computerScore = parseInt(computerScoreElement.textContent);
+			computerScoreElement.textContent = computerScore + 1;
+		}
+	};
+	button.addEventListener('click', onClickFunction);
+}
+
+buttons.forEach(buttonHandler)
 
